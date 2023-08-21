@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 import jwt_decode from "jwt-decode";
 function Login({setUserData}) {
 
@@ -27,16 +27,18 @@ function Login({setUserData}) {
     
           <div className="grid sm:grid-cols-2 gap-2 justify-between">
            
-          <GoogleLogin
-                    onSuccess={credentialResponse => {
-                       const data =  jwt_decode(credentialResponse.credential);
-                       console.log(data);
-                       setUserData(data);
-                    }}
-                    onError={() => {
-                      console.log('Login Failed');
-                    }}
-                  />
+          <GoogleOAuthProvider clientId="130647083198-b1eafrntpsfev6po8muccr5c72qhs533.apps.googleusercontent.com">
+                <GoogleLogin
+                onSuccess={credentialResponse => {
+                   const data =  jwt_decode(credentialResponse.credential);
+                   console.log(data);
+                   setUserData(data);
+                }}
+                onError={() => {
+                  console.log('Login Failed');
+                }}
+              />
+                </GoogleOAuthProvider>
            
             <div className="flex gap-2 items-center px-4 py-1 rounded-[3px] border-slate-300 border bg-white hover:bg-[#f8fcff] duration-100">
               {/* <!-- apple icon --> */}
